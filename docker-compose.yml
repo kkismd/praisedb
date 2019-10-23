@@ -1,0 +1,19 @@
+version: '3'
+services:
+  db:
+    image: mysql:8.0
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
+    volumes:
+      - mysql:/var/lib/mysql
+      - ./docker_mysql:/etc/mysql/conf.d
+    environment:
+      - MYSQL_DATABASE=ginmaku
+      - MYSQL_USER=ginmaku
+      - MYSQL_PASSWORD=abc123
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - TZ=Asia/Tokyo
+    ports:
+      - 3306:3306
+volumes:
+  mysql:
+    driver: local
