@@ -1,0 +1,56 @@
+@startuml
+skinparam monochrome true
+
+state "ユーザー一覧" as users_index 
+    users_index : /users/
+    users_index : ----
+    users_index : 登録済みユーザーの一覧
+    users_index : ----
+    users_index : 詳細画面へのリンク
+    users_index : 編集画面へのリンク
+    users_index : 新規作成画面へのリンク
+    users_index : 削除ボタン
+
+state "ユーザー詳細" as users_show 
+    users_show : /users/:id/show
+    users_show : ----
+    users_show : ユーザーの登録内容
+    users_show : ----
+    users_show : 編集画面へのリンク
+    users_show : 一覧画面へのリンク
+    users_show : 削除ボタン
+
+state "ユーザー編集画面" as users_edit
+    users_edit : /users/:id/edit
+    users_edit : ----
+    users_edit : 編集フォーム
+    users_edit : ----
+    users_edit : 一覧画面へのリンク
+    users_edit : 詳細画面へのリンク
+    users_edit : 保存ボタン
+
+state "ユーザー新規作成画面" as users_new
+    users_new : /users/new
+    users_new : ----
+    users_new : 編集フォーム
+    users_new : ----
+    users_new : 一覧画面へのリンク
+    users_new : 作成ボタン
+
+users_index --> users_show : 詳細
+users_index --> users_edit : 編集
+users_index --> users_new : 新規作成
+users_index --> users_index : 削除する
+
+users_show -> users_edit : 編集
+users_show -> users_index : 一覧に戻る
+
+users_new -> users_show : 作成
+users_new -> users_index : 一覧に戻る
+
+users_edit -> users_show : 保存
+users_edit -> users_show : 詳細に戻る
+users_edit -> users_index : 一覧に戻る
+
+
+@enduml
