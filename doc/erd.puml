@@ -1,0 +1,32 @@
+@startuml
+skinparam monochrome true
+
+entity users {
+    ユーザーテーブル
+    --
+    + id INTEGER [PK]
+    ~ name VARCHAR(255) [unique]
+    password_digest VARCHAR(255)
+    status INTEGER
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+}
+
+entity messages {
+    メッセージレジュメテーブル
+    --
+    + id INTEGER [PK]
+    * user_id INTEGER [FK]
+}
+
+entity songs {
+    歌詞テーブル
+    --
+    + id INTEGER [PK]
+    * user_id INTEGER [FK]
+}
+
+users -d-{ messages
+users -d-{ songs
+
+@enduml
