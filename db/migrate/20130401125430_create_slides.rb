@@ -4,9 +4,10 @@ class CreateSlides < ActiveRecord::Migration[6.0]
       t.string :title, null: false
       t.text :body, null: false
       t.string :author, null: false
-      t.datetime :deleted_at
+      t.datetime :discarded_at
 
       t.timestamps
     end
+    add_index :slides, :discarded_at
   end
 end

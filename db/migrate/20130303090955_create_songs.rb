@@ -6,9 +6,10 @@ class CreateSongs < ActiveRecord::Migration[6.0]
       t.text :words, null: false
       t.text :words_for_search, null: false
       t.string :cright, null: false
-      t.timestamp :deleted_at
+      t.timestamp :discarded_at
 
       t.timestamps
     end
+    add_index :songs, :discarded_at
   end
 end
