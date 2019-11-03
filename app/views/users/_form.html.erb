@@ -28,7 +28,7 @@
 
   <div class="field">
     <%= form.label :status %>
-    <%= form.number_field :status %>
+    <%= form.select :status, User.statuses.keys.map {|k| [k, k]} %>
   </div>
 
   <div class="actions">
