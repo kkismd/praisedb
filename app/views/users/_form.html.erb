@@ -1,3 +1,5 @@
+<div class="row">
+<div class="col-md-6 offset-md-3">
 <%= form_with(model: user, local: true) do |form| %>
   <% if user.errors.any? %>
     <div id="error_explanation">
@@ -11,27 +13,32 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
+  </div>
     <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
+    <%= form.text_field :name, class: 'form-control' %>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :password %>
-    <%= form.password_field :password %>
+    <%= form.password_field :password, class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :password_confirmation %>
-    <%= form.password_field :password_confirmation %>
+    <%= form.password_field :password_confirmation, class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
+    <%= form.label :organization %>
+    <%= form.select :organization_id, options_from_collection_for_select(@organizations, 'id', 'name'), class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
     <%= form.label :status %>
-    <%= form.select :status, User.statuses.keys.map {|k| [k, k]} %>
+    <%= form.select :status, User.statuses.keys.map {|k| [k, k]}, class: 'form-control' %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+  <%= form.submit 'save', class: 'btn btn-primary' %>
 <% end %>
+</div>
+</div>
