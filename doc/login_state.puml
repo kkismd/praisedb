@@ -1,0 +1,64 @@
+
+@startuml
+' skinparam monochrome true
+title PraiseDB\nアクセス制御と画面遷移
+
+state "ゲスト" as guest {
+    state "ログイン画面" as login
+        login : /login
+        login : ----
+        login : ユーザー名フィールド
+        login : パスワードフィールド
+        login : エラーメッセージ（失敗時）
+        login : ----
+        login : ログインボタン
+
+    [*] --> login
+}
+
+state "ユーザー専用" as user {
+    state "トップ画面" as top
+        top : /
+        top : ----
+        top : 利用者へのお知らせ
+        top : 最新の更新ページ
+        top : ----
+        top : 各機能へのリンク
+    state "聖句画面" as books
+        books : /books
+        books : ----
+        books : 聖句表示
+        books : ----
+        books : 各機能へのリンク
+    state "教会専用" as member  {
+        state "歌詞画面" as songs
+            songs : /songs
+            songs : ----
+            songs : 歌詞表示
+            songs : ----
+            songs :各機能へのリンク 
+        state "説教レジュメ画面" as slides
+            slides: /slides
+            slides: ----
+            slides: レジュメ表示
+            slides: ----
+            slides: 各機能へのリンク
+        state "ブックマーク編集画面" as bookmarks
+            bookmarks : /bookmarks
+            bookmarks : ----
+            bookmarks : ブックマーク一覧
+            bookmarks : ----
+            bookmarks : 各機能へのリンク
+    }
+}
+
+[*] --> guest
+login --> top : ログイン成功
+login --> login : ログイン失敗
+user -> login : ログアウト
+top --> books
+top --> songs
+top --> slides
+top ---> bookmarks
+
+@enduml
