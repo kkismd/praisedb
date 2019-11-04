@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  belongs_to :organization
   validates :name, presence: true
   has_secure_password
   enum status: { normal: 0, disabled: 9, admin: 10, admin_disabled: 19 }
