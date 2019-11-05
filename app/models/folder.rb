@@ -2,7 +2,7 @@ class Folder < ActiveRecord::Base
   FOLDER_SHOW_COUNT = 20
 
   attr_accessor :title_date
-  has_many :bookmarks, order: 'bookmarks.position'
+  has_many :bookmarks, -> { order('bookmarks.position') }
 
   def self.make(attr)
     title_date = attr[:title_date]
