@@ -1,0 +1,66 @@
+<%- title @song.title -%>
+<p id="notice" style="clear: both;"><%= notice %></p>
+
+<div id="bookmark_container">
+  <%= render :partial => 'shared/bookmark' %>
+</div>
+
+<div id="thumbnail-area">
+<%- @song.phrases.each do |phrase| -%>
+<pre class="thumbnail"><%= suppress_ruby phrase %></pre>
+<%- end -%>
+</div>
+<script type="text/javascript">
+  $('pre.small').draggable({axis:'y', revert: true, cursor:'move'});
+</script>
+
+<div id="boxB">
+<p>『<%= @song.title %>』(<%= @song.code %>)</p>
+
+<%- @song.outline.each_with_index do |header, idx| %>
+    <p>
+      <%- if idx < 9 -%><span class="btn"><%= idx + 1 %></span><%- end -%>
+      <%= link_to_function(suppress_ruby(header),
+                            "change_remote(#{idx},'#{detail_song_url(@song)}')",
+                            :id => "change-button-#{idx}",
+                            :class => 'change-button' ) %></p>
+<%- end -%>
+
+<%= link_to 'ReOpen', detail_song_path(@song), :target => 'projector' %> |
+<%= link_to 'Edit', edit_song_path(@song) %> |
+<%= link_to 'Back', songs_path %> |
+<%= button_to_blank %>
+<%= button_to_function '表示切替(半分)', 'song_halve_remote()' %>
+<%= render :partial => 'shared/add_to_bookmark', locals: { title: @song.title }  %>
+
+</div>
+<script type="text/javascript">
+  $(document).keydown(function(event) {
+      var ARROW_UP   = 38;
+      var ARROW_DOWN = 40;
+      var KEYBOARD_0 = 48;
+      var KEYPAD_0   = 96;
+      var KEYBOARD_1 = 49;
+      var KEYPAD_1   = 97;
+      var url = '<%= detail_song_url(@song) %>';
+      var size = <%= @song.phrases.size %>;
+      var key = event.keyCode;
+
+      if (key == ARROW_UP) {
+          prev_remote(url);
+          return false;
+      } else if (key == ARROW_DOWN) {
+          next_remote(url);
+          return false;
+      } else if (key >= KEYBOARD_1 && key < KEYBOARD_1 + size) {
+          change_remote(key - KEYBOARD_1, url);
+          return false;
+      } else if (key >= KEYPAD_1 && key < KEYPAD_1 + size) {
+          change_remote(key - KEYPAD_1, url);
+          return false;
+      } else if (key == KEYBOARD_0 || key == KEYPAD_0) {
+          wipe_remote();
+          return false;
+      }
+  });
+</script>

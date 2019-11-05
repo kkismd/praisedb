@@ -1,0 +1,49 @@
+<%= form_for(@song) do |f| %>
+  <% if @song.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@song.errors.count, "error") %> prohibited this song from being saved:</h2>
+
+      <ul>
+      <% @song.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+    <table>
+      <tr>
+        <th> <%= f.label :code %> </th>
+        <td> <%= f.select(:code, Song.code_options, :prompt => 'コードを指定して下さい') %> </td>
+      </tr>
+      <tr>
+        <th> <%= f.label :title %> </th>
+        <td> <%= f.text_field :title, :size => 60 %> </td>
+      </tr>
+      <tr>
+        <th> <%= f.label :words %> </th>
+        <td> <%= f.text_area :words, :cols => 60, :rows => 15 %> </td>
+      </tr>
+      <tr>
+        <th> <%= f.label :cright  %> </th>
+        <td> <%= f.text_field :cright, :size => 60 %> </td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>
+          <%= f.submit %>
+          <%= f.button 'ローマ字をつけて更新する', value: :roman, remote: true %>
+          <%= link_to 'preview', :preview_songs, remote: true, method: :post, id: 'preview-button' %>
+        </td>
+      </tr>
+    </table>
+    <div id="preview"></div>
+
+    <script type="text/javascript">
+        $('#preview-button').on("ajax:before", function(){
+            $(this).data('params', 'words=' + encodeURIComponent($('#song_words').val()));
+        });
+    </script>
+
+
+<% end %>
