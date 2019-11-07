@@ -7,3 +7,5 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 organization = Organization.create(name: 'admin', status: :admin)
 User.create(organization: organization, name: "admin", password: "abc12345", status: :admin)
+
+Folder.create(id: 1, title: '常用', sticky: true)
