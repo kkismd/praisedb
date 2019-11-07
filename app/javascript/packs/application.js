@@ -16,3 +16,14 @@ import '../stylesheets/application';
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
+
+window.$ = require('jquery');
+
+import fontawesome from '@fortawesome/fontawesome'
+import faSolid from '@fortawesome/fontawesome-free-solid'
+import faRegular from '@fortawesome/fontawesome-free-regular'
+import faBrands from '@fortawesome/fontawesome-free-brands'
+
+fontawesome.library.add(faSolid, faRegular, faBrands)
+
+fontawesome.dom.i2svg()
