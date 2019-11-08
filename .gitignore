@@ -24,9 +24,4 @@
 /config/master.key
 
 /public/packs
-/public/packs-test
-/elm-stuff
 /node_modules
-/yarn-error.log
-yarn-debug.log*
-.yarn-integrity
