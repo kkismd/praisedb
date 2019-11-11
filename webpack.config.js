@@ -1,4 +1,5 @@
 const path = require("path");
+const webpack = require('webpack');
 const WebpackAssetsManifest = require("webpack-assets-manifest");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
@@ -17,20 +18,29 @@ module.exports = {
     filename: isProd ? "[name]-[hash].js" : "[name].js"
   },
   resolve: {
+    //extensions: [".js", ".scss"]
     extensions: [".js"]
   },
   module: {
     rules: [
       {
-        test: /\.css$/,
+        test: /\.(scss)$/,
         use: [
-          MiniCssExtractPlugin.loader,
-          "css-loader",
           {
-            loader: "postcss-loader",
-            options: {
-              plugins: loader => [require("postcss-preset-env")()]
-            }
+            loader: MiniCssExtractPlugin.loader,
+            options: {}
+          },
+          {
+            loader: 'css-loader',
+            options: { sourceMap: true, importLoaders: 2  /*postcss+sass*/ }
+          },
+          {
+            loader: 'postcss-loader',
+            options: { sourceMap: true, plugins: [require('autoprefixer')] }
+          },
+          {
+            loader: 'sass-loader',
+            options: { sourceMap: true, outputStyle: 'expanded' }
           }
         ]
       }
@@ -40,6 +50,5 @@ module.exports = {
     new WebpackAssetsManifest({ publicPath: true }),
     new MiniCssExtractPlugin({
       filename: isProd ? "[name]-[hash].css" : "[name].css"
-    })
-  ]
+    })]
 };
