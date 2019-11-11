@@ -2,6 +2,16 @@ import 'bootstrap';
 import { hello } from "./greeter";
 
 import "./application.scss";
+import $ from "jquery";
+import "jquery-ui/accordion";
+import "jquery-ui/sortable";
+import "jquery-ui/datepicker";
+import "jquery-ui-themes/themes/dark-hive/jquery-ui.min.css";
+import "jquery-ui-themes/themes/dark-hive/theme.css";
 
+window.$ = $;
+
+import Rails from "rails-ujs";
+Rails.start();
 
 console.log(hello("Rails"));

@@ -18,11 +18,18 @@ module.exports = {
     filename: isProd ? "[name]-[hash].js" : "[name].js"
   },
   resolve: {
-    //extensions: [".js", ".scss"]
-    extensions: [".js"]
+    extensions: [".js"],
+    alias: {
+      'jquery-ui': 'jquery-ui/ui/widgets',
+      'jquery-ui-css': 'jquery-ui/../../themes/base'
+    }
   },
   module: {
     rules: [
+      {
+        test: /\.(css)$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader']
+      },
       {
         test: /\.(scss)$/,
         use: [
@@ -39,10 +46,13 @@ module.exports = {
             options: { sourceMap: true, plugins: [require('autoprefixer')] }
           },
           {
-            loader: 'sass-loader',
-            options: { sourceMap: true, outputStyle: 'expanded' }
+            loader: 'sass-loader'
           }
         ]
+      },
+      {
+        test: /\.(png|jpg|gif|ttf|eot|woff|woff2|svg)$/,
+        use: "file-loader"
       }
     ]
   },
