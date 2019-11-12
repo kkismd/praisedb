@@ -32,8 +32,8 @@ class Folder < ActiveRecord::Base
   def add(bookmark)
     self.class.transaction do
       max_position = bookmarks.maximum(:position) || 0
-      bookmarks << bookmark
       bookmark.position = max_position + 1
+      bookmarks << bookmark
       bookmark.save
     end
   end
