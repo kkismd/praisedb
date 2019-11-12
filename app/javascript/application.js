@@ -13,6 +13,9 @@ window.$ = $;
 import Rails from "rails-ujs";
 Rails.start();
 
+import './common';
+import './books';
+
 /** ここから下はサンプル */
 import { hello } from "./greeter";
 console.log(hello("Rails"));

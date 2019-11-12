@@ -1,0 +1,73 @@
+<%- title(@book_search_form.title) -%>
+<div id="bookmark_container">
+  <%= render :partial => 'shared/bookmark' %>
+</div>
+<div id="index_container">
+<%= form_for @book_search_form, url: search_books_path, html: {method: :get, target: 'projector'} do |f| %>
+    <table class="books">
+      <tr>
+        <td colspan="3"></td><td rowspan="68" >
+        文字<button id="font_large">大</button><br/>
+        文字<button id="font_small">小</button><br/><br/>
+        スクロール <button id="scroll_up">↑</button><br/>
+        スクロール <button id="scroll_down">↓</button>
+      </td>
+      </tr>
+      <%- [ @book_names[0..21], @book_names[22..43], @book_names[44..65] ].transpose.flatten.each_with_index do |book_name,i| -%>
+          <%- if i % 3 == 0 %> <tr> <%- end -%>
+          <td><%= f.radio_button :n, book_name.id %><%=  book_name.japanese %>/<%= book_name.english %></td>
+          <%- if i % 3 == 2 %> </tr> <%- end -%>
+      <%- end -%>
+      <tr>
+        <td colspan="3">
+          <%= f.text_field :c, :size => 3 %>章(chapter)
+          <%= f.text_field :vf, :size => 4 %>節(verse) 〜
+          <%= f.text_field :vt, :size => 4 %>節(verse)<br />
+          <%= f.radio_button :lang, BookSearchForm::LANG_BOTH %>日本語 &amp; English
+          <%= f.radio_button :lang, BookSearchForm::LANG_JAPANESE %>日本語のみ
+          <%= f.radio_button :lang, BookSearchForm::LANG_ENGLISH %>English Only<br />
+          <%= f.submit 'Open', id: :open_button %>
+          <input type="reset" value="Reset">
+          <%= button_to_blank %>
+        </td>
+      </tr>
+    </table>
+<%- end %>
+<%= render :partial => 'shared/add_to_bookmark', locals: { title: @book_search_form.title }  %>
+
+<script type="text/javascript">
+  function key_binding() {
+      $(document).keydown(function(event) {
+          var ARROW_UP   = 38;
+          var ARROW_DOWN = 40;
+
+          switch (event.keyCode) {
+              case ARROW_UP: return scroll_up_remote();
+              case ARROW_DOWN: return scroll_down_remote();
+              default: return true;
+          }
+      });
+  }
+  function button_binding() {
+      $('#font_large').click(font_large_remote);
+      $('#font_small').click(font_small_remote);
+      $('#scroll_up').click(scroll_up_remote);
+      $('#scroll_down').click(scroll_down_remote);
+      $('#open_button').click(function(e){
+          var query_string = '?' + $('#new_book_search_form').serialize();
+          setTimeout(function(){location = '<%= books_path %>' + query_string;}, 500);
+      });
+  }
+  // event binding
+  $(function () {
+      key_binding();
+      button_binding();
+  });
+</script>
+
+<h2>menu</h2>
+<ul>
+  <li><%= link_to '賛美歌詞表示 - Praise songs', songs_path %></li>
+  <li><%= link_to 'メッセージスライド - Message summaries', slides_path %></li>
+</ul>
+</div>
