@@ -18,7 +18,7 @@ module.exports = {
     filename: isProd ? "[name]-[hash].js" : "[name].js"
   },
   resolve: {
-    extensions: [".js"],
+    extensions: [".js", ".coffee"],
     alias: {
       'jquery-ui': 'jquery-ui/ui/widgets',
       'jquery-ui-css': 'jquery-ui/../../themes/base'
@@ -53,6 +53,10 @@ module.exports = {
       {
         test: /\.(png|jpg|gif|ttf|eot|woff|woff2|svg)$/,
         use: "file-loader"
+      },
+      {
+        test: /\.coffee$/,
+        use: ['coffee-loader']
       }
     ]
   },
