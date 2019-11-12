@@ -47,14 +47,14 @@ class BookmarksController < ApplicationController
         format.html { redirect_to @bookmark, notice: 'Bookmark was successfully created.' }
         format.json { render json: @bookmark, status: :created, location: @bookmark }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @bookmark.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def create_remote
-    bookmark = Bookmark.new(params[:bookmark])
+    bookmark = Bookmark.new(create_params)
     session[:current_folder].present? && folder = Folder.where(id: session[:current_folder].to_i).first
     if folder
       folder.add(bookmark)
@@ -75,7 +75,7 @@ class BookmarksController < ApplicationController
         format.html { redirect_to @bookmark, notice: 'Bookmark was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { render json: @bookmark.errors, status: :unprocessable_entity }
       end
     end
@@ -91,5 +91,9 @@ class BookmarksController < ApplicationController
       format.html { redirect_to bookmarks_url }
       format.json { head :no_content }
     end
+  end
+
+  private def create_params
+    params.require(:bookmark).permit(:title, :controller_name, :action_name, :params_value, :commit)
   end
 end
