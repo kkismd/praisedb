@@ -1,5 +1,4 @@
 import 'bootstrap';
-import { hello } from "./greeter";
 
 import "./application.scss";
 import $ from "jquery";
@@ -14,4 +13,9 @@ window.$ = $;
 import Rails from "rails-ujs";
 Rails.start();
 
+/** ここから下はサンプル */
+import { hello } from "./greeter";
 console.log(hello("Rails"));
+
+import { foo } from './hello';
+foo();
