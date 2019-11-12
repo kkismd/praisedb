@@ -1,0 +1,49 @@
+<%- title(@book_search_form.title) -%>
+<%- content_for :header do -%>
+    <style type="text/css">
+        html,body {
+            overflow: hidden;
+        }
+    </style>
+<%- end -%>
+<div id="container">
+  <div id="words-container">
+    <%- @books.each_with_index do |book, i| -%>
+        <%- if i.even? -%><div id="wd-<%= i / 2 %>" class="verse hide"><%- end -%>
+        <p class="book-word shadow">
+          <span class="verse-num"><%= book.verse %>:</span> <%= book.word.gsub('／', '') %>
+        </p>
+        <%- if i.odd? -%></div><%- end -%>
+    <%- end -%>
+  </div>
+
+  <%- if @books.present? -%>
+  <div id="book-name">
+    <%= @books.first.book_name.japanese %> / <%= @books.first.book_name.english %>
+    : <%= @books.first.chapter %>
+  </div>
+  <%- end -%>
+</div>
+<script type="text/javascript">
+  var max_section_num = <%= @books.count / 2 %>;
+  function keybind() {
+      $(document).keydown(function(event) {
+          if (event.keyCode == 38) {
+              return scroll_up();
+          } else if (event.keyCode == 40) {
+              return scroll_down();
+          }
+      });
+  }
+  function init() {
+      var wd0 = $('#wd-0');
+      wd0.removeClass('hide');
+      books_resize();
+      books_centering();
+      set_max_section_num(max_section_num);
+  }
+  $(function (){
+      init();
+      keybind();
+  });
+</script>

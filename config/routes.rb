@@ -21,6 +21,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :bookmarks do
+    collection do
+      post :create_remote, :as => :add
+    end
+  end
+
   resources :folders do
     member do
       get :content, :as => :content_of
