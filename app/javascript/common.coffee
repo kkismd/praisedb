@@ -30,7 +30,7 @@ get_target_window = ->
 current = 0
 
 # 子ウィンドウの歌詞を切り替える
-window.change_remote = (idx, url) ->
+window.songs_change_remote = (idx, url) ->
   detail_window = get_target_window()
 
   # 指定のURLにいなければ移動
@@ -39,7 +39,7 @@ window.change_remote = (idx, url) ->
 
   # 表示切り替えを指示
   setTimeout(->
-    detail_window.change(idx)
+    detail_window.songs_change(idx)
     current = idx
   ,100)
 
@@ -62,9 +62,21 @@ window.wipe_remote = -> get_target_window().wipe()
 window.wipe = ->
   $('#container').toggle()
 
-window.song_halve_remote = -> get_target_window().song_halve()
+controller_name = document.head.querySelector("[name~=controller_name][content]").content;
+switch controller_name
+  when 'books' 
+   # binding for books
+    window.font_large_remote  = -> get_target_window().books_font_large(); false
+    window.font_small_remote  = -> get_target_window().books_font_small(); false
+    window.scroll_up_remote   = -> get_target_window().books_scroll_up();  false
+    window.scroll_down_remote = -> get_target_window().books_scroll_down();false
+  when 'songs' 
+    # binding for songs
+    window.song_halve_remote = -> get_target_window().song_halve()
+  when 'slides' then 'binding for slides'
 
-window.font_large_remote  = -> get_target_window().font_large(); false
-window.font_small_remote  = -> get_target_window().font_small(); false
-window.scroll_up_remote   = -> get_target_window().scroll_up();  false
-window.scroll_down_remote = -> get_target_window().scroll_down();false
+remote_function_name = (base_name) -> "#{controller_name}_#{base_name}"
+
+
+
+

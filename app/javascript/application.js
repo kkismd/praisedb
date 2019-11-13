@@ -5,6 +5,7 @@ import $ from "jquery";
 import "jquery-ui/accordion";
 import "jquery-ui/sortable";
 import "jquery-ui/datepicker";
+import "jquery-ui/draggable";
 import "jquery-ui-themes/themes/dark-hive/jquery-ui.min.css";
 import "jquery-ui-themes/themes/dark-hive/theme.css";
 
@@ -21,6 +22,7 @@ $.ajaxSetup({
 
 import './common';
 import './books';
+import './songs';
 
 /** ここから下はサンプル */
 import { hello } from "./greeter";

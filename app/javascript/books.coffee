@@ -36,12 +36,12 @@ max_section_num = 0
 window.set_max_section_num = (num) ->
   max_section_num = num
 
-window.scroll_up = ->
+window.books_scroll_up = ->
   return false if current < 1
   books_transition(-> current--)
   false
 
-window.scroll_down = ->
+window.books_scroll_down = ->
   return false if current + 1 >= max_section_num
   books_transition(-> current++)
   false
@@ -53,8 +53,8 @@ font_size_change = (callback) ->
   $container.css('font-size', new_font_size)
   books_centering()
 
-window.font_large = ->
+window.books_font_large = ->
   font_size_change( (size) -> size * 1.1 )
 
-window.font_small = ->
+window.books_font_small = ->
   font_size_change( (size) -> size * 0.9 )
