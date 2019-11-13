@@ -53,6 +53,7 @@
       $('#font_small').click(font_small_remote);
       $('#scroll_up').click(scroll_up_remote);
       $('#scroll_down').click(scroll_down_remote);
+      $('#wipe_remote').click(wipe_remote);
       $('#open_button').click(function(e){
           var query_string = '?' + $('#new_book_search_form').serialize();
           setTimeout(function(){location = '<%= books_path %>' + query_string;}, 500);
