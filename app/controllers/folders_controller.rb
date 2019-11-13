@@ -76,7 +76,7 @@ class FoldersController < ApplicationController
     logger.error params[:bm].inspect
     folder = Folder.find params[:id]
     folder.reorder params[:bm]
-    render text: 'ok'
+    render plain: 'ok'
   end
 
   # PUT /folders/1

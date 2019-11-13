@@ -17,7 +17,8 @@
     <%= f.submit 'お気に入りに追加' %>
 <%- end -%>
 <script type="text/javascript">
-    $('#new_bookmark').on('ajax:success', function(data, res){
+    $('#new_bookmark').on('ajax:success', function(event){
+        const res = event.detail[2].responseText;
         $('#bookmark_container').html(res);
     });
 </script>
