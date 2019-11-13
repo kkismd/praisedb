@@ -20,7 +20,7 @@
 
 <p>
   <span class="ui-icon ui-icon-circle-plus"></span>
-  <a href="" id="new_fonder_button">新規フォルダ作成</a>
+  <a href="" id="new_folder_button">新規フォルダ作成</a>
 </p>
 
 <%= form_for Folder.new(), :url => add_folders_path, remote: true, :html => {:style => 'display: none;'} do |f| %>
@@ -59,13 +59,14 @@
             $('#bookmark_container').html(res);
         });
         
-        $('#new_folder').on('click', function(event) { $("#new_folder").toggle(); });
+        $('#new_folder_button').click(function(event) {
+          $("#new_folder").toggle();
+          return false;
+        });
 
-        $('#edit_folder_link').click(
-                function () {
-                    $(this).attr('href', folders_path + '/' + active_folder_id + '/edit');
-                }
-        )
+        $('#edit_folder_link').click(function () {
+            $(this).attr('href', folders_path + '/' + active_folder_id + '/edit');
+        });
     });
 </script>
 

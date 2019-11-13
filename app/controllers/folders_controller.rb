@@ -1,9 +1,9 @@
 class FoldersController < ApplicationController
+  protect_from_forgery
 
   def set_current
-    logger.debug(params.inspect)
     session[:current_folder] = params[:f].to_i
-    render :text => 'ok'
+    render plain: 'ok'
   end
 
   # GET /folders/1/content
@@ -60,7 +60,7 @@ class FoldersController < ApplicationController
         format.html { redirect_to @folder, notice: 'Folder was successfully created.' }
         format.json { render json: @folder, status: :created, location: @folder }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @folder.errors, status: :unprocessable_entity }
       end
     end
@@ -101,7 +101,7 @@ class FoldersController < ApplicationController
         format.html { redirect_to @folder, notice: 'Folder was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { render json: @folder.errors, status: :unprocessable_entity }
       end
     end
