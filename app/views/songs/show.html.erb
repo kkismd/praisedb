@@ -11,7 +11,7 @@
 <%- end -%>
 </div>
 <script type="text/javascript">
-  $('pre.small').draggable({axis:'y', revert: true, cursor:'move'});
+  $('#thumbnail-area').draggable({axis:'y', revert: true, cursor:'move'});
 </script>
 
 <div id="boxB">
@@ -20,7 +20,8 @@
 <%- @song.outline.each_with_index do |header, idx| %>
     <p>
       <%- if idx < 9 -%><span class="btn"><%= idx + 1 %></span><%- end -%>
-      <%= link_to_function(suppress_ruby(header),
+      <%= link_to suppress_ruby(header), 'javascript:void(0)', id: "change-button-#{idx}", class: 'change-button', data: {idx: idx, url: detail_song_url(@song)} %>
+      <%#= link_to_function(suppress_ruby(header),
                             "change_remote(#{idx},'#{detail_song_url(@song)}')",
                             :id => "change-button-#{idx}",
                             :class => 'change-button' ) %></p>
@@ -30,7 +31,8 @@
 <%= link_to 'Edit', edit_song_path(@song) %> |
 <%= link_to 'Back', songs_path %> |
 <%= button_to_blank %>
-<%= button_to_function '表示切替(半分)', 'song_halve_remote()' %>
+<%= button_tag '表示切替(半分)', id: 'song_halve_remote_button' %>
+<%#= button_to_function '表示切替(半分)', 'song_halve_remote()' %>
 <%= render :partial => 'shared/add_to_bookmark', locals: { title: @song.title }  %>
 
 </div>
@@ -53,14 +55,21 @@
           next_remote(url);
           return false;
       } else if (key >= KEYBOARD_1 && key < KEYBOARD_1 + size) {
-          change_remote(key - KEYBOARD_1, url);
+          songs_change_remote(key - KEYBOARD_1, url);
           return false;
       } else if (key >= KEYPAD_1 && key < KEYPAD_1 + size) {
-          change_remote(key - KEYPAD_1, url);
+          songs_change_remote(key - KEYPAD_1, url);
           return false;
       } else if (key == KEYBOARD_0 || key == KEYPAD_0) {
           wipe_remote();
           return false;
       }
   });
+  $(function () {
+    $('.change-button').click(function (event) {
+      const idx = $(event.currentTarget).data('idx');
+      const url = $(event.currentTarget).data('url');
+      songs_change_remote(idx, url);
+    });
+  })
 </script>
