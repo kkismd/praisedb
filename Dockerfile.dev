@@ -1,0 +1,50 @@
+# nodeイメージをビルド
+FROM node:13.1.0-alpine as node
+
+# 軽量のAlpine Linuxベースのイメージ
+FROM ruby:2.6.5-alpine3.10
+
+# rails consoleの中で日本語入力を設定
+ENV LANG C.UTF-8
+
+# 環境構築に必要なパッケージをインストール
+RUN apk add --no-cache alpine-sdk \
+    mysql-client \
+    mysql-dev \
+    build-base \
+    bash \
+    tzdata
+
+# Dockerコンテナ起動時の実行タスクを処理するためのツール
+ENV ENTRYKIT_VERSION 0.4.0
+
+# entrykitインストール
+RUN wget https://github.com/progrium/entrykit/releases/download/v${ENTRYKIT_VERSION}/entrykit_${ENTRYKIT_VERSION}_Linux_x86_64.tgz \
+    && tar -xvzf entrykit_${ENTRYKIT_VERSION}_Linux_x86_64.tgz \
+    && rm entrykit_${ENTRYKIT_VERSION}_Linux_x86_64.tgz \
+    && mv entrykit /bin/entrykit \
+    && chmod +x /bin/entrykit \
+    && entrykit --symlink
+
+# javascriptパッケージマネージャ
+ENV YARN_VERSION 1.19.1
+
+# MSBで、ビルドしたnodeイメージからyarnとnodeをコピー
+COPY --from=node /opt/yarn-v$YARN_VERSION /opt/yarn
+COPY --from=node /usr/local/bin/node /usr/local/bin/
+
+# dockerイメージから参照できる様シンボリックリンク作成
+RUN ln -s /opt/yarn/bin/yarn /usr/local/bin/yarn \
+    && ln -s /opt/yarn/bin/yarnpkg /usr/local/bin/yarnpkg
+
+# ディレクトリ作成
+RUN mkdir /app
+
+# 作業フォルダとして設定
+WORKDIR /app
+
+# entrykitのコマンド設定
+ENTRYPOINT [ \
+    "prehook", "ruby -v", "--", \
+    "prehook", "gem install bundler", "--", \
+    "prehook", "bundle install -j3 --quiet", "--"]
