@@ -15,6 +15,8 @@ RUN apk add --no-cache alpine-sdk \
     bash \
     tzdata
 
+RUN gem install bundler
+
 # Dockerコンテナ起動時の実行タスクを処理するためのツール
 ENV ENTRYKIT_VERSION 0.4.0
 
@@ -46,5 +48,4 @@ WORKDIR /app
 # entrykitのコマンド設定
 ENTRYPOINT [ \
     "prehook", "ruby -v", "--", \
-    "prehook", "gem install bundler", "--", \
     "prehook", "bundle install -j3 --quiet", "--"]
