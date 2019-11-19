@@ -13,7 +13,17 @@
  *= require_tree .
  *= require_self
  */
- #bookmark_container {
+html {
+  height: 100%;
+}
+body {
+  height: 100%;
+}
+#container {
+  height: 100%;
+}
+
+#bookmark_container {
     float: left;
     font-size: 8pt;
   }
