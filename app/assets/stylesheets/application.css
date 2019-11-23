@@ -24,20 +24,20 @@ body {
 }
 
 #bookmark_container {
-    float: left;
-    font-size: 8pt;
-  }
-  #bookmark {
-    font-size: 8pt;
-    margin: 0;
-    width: 200px;
-    overflow: hidden;
-  }
-  .bmlist {
-    list-style: none;
-    margin: 0;
-    margin-left: -5.5em;
-    margin-right: -2em;
-    line-height: 1.7em;
-    overflow: hidden;
-  }
+  float: left;
+  font-size: 8pt;
+}
+#bookmark {
+  font-size: 8pt;
+  margin: 0;
+  width: 200px;
+  overflow: hidden;
+}
+.bmlist {
+  list-style: none;
+  margin: 0;
+  margin-left: -5.5em;
+  margin-right: -2em;
+  line-height: 1.7em;
+  overflow: hidden;
+}

@@ -21,10 +21,7 @@
     <p>
       <%- if idx < 9 -%><span class="btn"><%= idx + 1 %></span><%- end -%>
       <%= link_to suppress_ruby(header), 'javascript:void(0)', id: "change-button-#{idx}", class: 'change-button', data: {idx: idx, url: detail_song_url(@song)} %>
-      <%#= link_to_function(suppress_ruby(header),
-                            "change_remote(#{idx},'#{detail_song_url(@song)}')",
-                            :id => "change-button-#{idx}",
-                            :class => 'change-button' ) %></p>
+    </p>
 <%- end -%>
 
 <%= link_to 'ReOpen', detail_song_path(@song), :target => 'projector' %> |
