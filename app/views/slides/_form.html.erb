@@ -1,0 +1,53 @@
+<%= form_for(@slide) do |f| %>
+  <% if @slide.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@slide.errors.count, "error") %> prohibited this slide from being saved:</h2>
+
+      <ul>
+      <% @slide.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<table>
+  <tr>
+    <th><%= f.label :title %></th>
+    <td><%= f.text_field :title, size:40 %></td>
+  </tr>
+  <tr>
+    <th><%= f.label :body %></th>
+    <td><%= f.text_area :body, cols:35, rows:15 %></td>
+  </tr>
+  <tr>
+    <th><%= f.label :author %></th>
+    <td><%= f.text_field :author %></td>
+  </tr>
+  <tr>
+    <th></th>
+    <td>
+      <%= f.submit %>
+      <%= link_to 'preview', :preview_slides,
+                  remote: true, method: :post,
+                  id: 'preview-button', :'data-type' => :html %>
+    </td>
+  </tr>
+</table>
+  <div class="actions">
+
+  </div>
+<% end %>
+<div id="preview"></div>
+
+<script type="text/javascript">
+    $('#preview-button')
+            .on("ajax:before", function(){
+                $(this).data('params', 'body=' + encodeURIComponent($('#slide_body').val()));
+            })
+            .on('ajax:success', function(data, res, xhr){
+                $('#preview').html(res);
+                $('.preview-page').each(function(i,elm){
+                    resize(elm);
+                })
+            });
+</script>

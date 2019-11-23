@@ -15,6 +15,7 @@ Rails.start();
 import './common';
 import './books';
 import './songs';
+import './slides';
 import ready from './ready';
 
 // start up your app
