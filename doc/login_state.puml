@@ -1,7 +1,8 @@
 
 @startuml
-' skinparam monochrome true
-title PraiseDB\nアクセス制御と画面遷移
+!include skinparam.puml
+
+title PraiseDB アクセス制御と画面遷移
 
 state "ゲスト" as guest {
     state "ログイン画面" as login
@@ -52,7 +53,7 @@ state "ユーザー専用" as user {
     }
 }
 
-[*] --> guest
+[*] --> guest : アクセス
 login --> top : ログイン成功
 login --> login : ログイン失敗
 user -> login : ログアウト
