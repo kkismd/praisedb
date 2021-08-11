@@ -1,37 +1,37 @@
 version: '3'
 services:
-  app: &app_base      # rails server用コンテナ
-    build:            # Dockerfileを実行し、ビルドされる時のパス指定
-      context: .
-      dockerfile: Dockerfile.dev
-    volumes:          # マウントする設定ファイルのパス指定
-      - .:/app
-      - bundle-data:/usr/local/bundle
-    ports:            # port番号（docker:host）
-      - "3030:3000"
-    depends_on:       # Service同士の依存関係
-      - db
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
-    tty: true         # railsのデバッグを使用するための設定
-    stdin_open: true  # 同上
+  # app: &app_base      # rails server用コンテナ
+  #   build:            # Dockerfileを実行し、ビルドされる時のパス指定
+  #     context: .
+  #     dockerfile: Dockerfile.dev
+  #   volumes:          # マウントする設定ファイルのパス指定
+  #     - .:/app
+  #     - bundle-data:/usr/local/bundle
+  #   ports:            # port番号（docker:host）
+  #     - "3000:3000"
+  #   depends_on:       # Service同士の依存関係
+  #     - db
+  #   command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+  #   tty: true         # railsのデバッグを使用するための設定
+  #   stdin_open: true  # 同上
 
   db:
     image: mysql:8.0
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
     volumes:
       - mysql:/var/lib/mysql
-      - ./docker_mysql:/etc/mysql/conf.d
+      # - ./docker_mysql:/etc/mysql/conf.d
     environment:
-      - MYSQL_DATABASE=ginmaku
-      - MYSQL_USER=ginmaku
-      - MYSQL_PASSWORD=abc123
-      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
-      - TZ=Asia/Tokyo
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ginmaku
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: docker
+      TZ: 'Asia/Tokyo'
     ports:
-      - "4306:3306"
+      - "3306:3306"
 
 volumes:
   mysql:
     driver: local
-  bundle-data:
-    driver: local
+  # bundle-data:
+  #   driver: local

@@ -19,7 +19,7 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
     @user = User.find(params[:id])
-    @organizations = Organization.all
+    @homes = Home.all
   end
 
   # POST /users
