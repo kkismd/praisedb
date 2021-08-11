@@ -9,12 +9,13 @@ default: &default
   encoding: utf8
   pool: 5
   host: db
-  username: ginmaku
-  password: abc123
 
 development:
   <<: *default
   database: ginmaku
+  host: 127.0.0.1
+  username: docker
+  password: docker
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -22,6 +23,9 @@ development:
 test:
   <<: *default
   database: ginmaku_test
+  host: 127.0.0.1
+  username: root
+  password: root
 
 production:
   <<: *default

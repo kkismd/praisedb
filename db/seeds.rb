@@ -5,7 +5,10 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-organization = Organization.create(name: 'admin', status: :admin)
-User.create(organization: organization, name: "admin", password: "abc12345", status: :admin)
+admin = Home.create!(id: 0, name: 'admin', status: :admin)
+User.create!(id: 0, home: admin, name: 'admin', password: 'abc12345', status: :admin)
 
-Folder.create(id: 1, title: '常用', sticky: true)
+tlc = Home.create!(id: 1, name: 'tlc')
+User.create!(id: 1, home: tlc, name: 'zion', password: 'shimomaruko')
+
+Folder.create!(id: 1, title: '常用', sticky: true)

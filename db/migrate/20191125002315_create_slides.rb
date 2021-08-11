@@ -1,7 +1,7 @@
 class CreateSlides < ActiveRecord::Migration[6.0]
   def change
     create_table :slides do |t|
-      t.references :organization, foreign_key: true
+      t.references :home, foreign_key: true
       t.string :title, null: false
       t.text :body, null: false
       t.string :author, null: false
