@@ -1,10 +1,20 @@
 @startuml
-skinparam monochrome true
+!include skinparam.puml
+hide circle
+
+entity homes {
+    ホームテーブル
+    --
+    + id INTEGER [PK]
+    ~ name VARCHAR(255) [unique]
+    status INTEGER
+}
 
 entity users {
     ユーザーテーブル
     --
     + id INTEGER [PK]
+    * home_id INTEGER [FK]
     ~ name VARCHAR(255) [unique]
     password_digest VARCHAR(255)
     status INTEGER
@@ -16,17 +26,18 @@ entity messages {
     メッセージレジュメテーブル
     --
     + id INTEGER [PK]
-    * user_id INTEGER [FK]
+    * home_id INTEGER [FK]
 }
 
 entity songs {
     歌詞テーブル
     --
     + id INTEGER [PK]
-    * user_id INTEGER [FK]
+    * home_id INTEGER [FK]
 }
 
-users -d-{ messages
-users -d-{ songs
+homes -{ users
+homes -d-{ messages
+homes -d-{ songs
 
 @enduml

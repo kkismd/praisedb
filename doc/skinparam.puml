@@ -1,0 +1,6 @@
+skinparam shadowing false
+skinparam BorderColor steelblue
+skinparam ClassBorderColor steelblue
+skinparam StateBorderColor steelblue
+skinparam StateBackgroundColor #white
+skinparam ClassBackgroundColor #white
