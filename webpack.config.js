@@ -43,7 +43,9 @@ module.exports = {
           },
           {
             loader: 'postcss-loader',
-            options: { sourceMap: true, plugins: [require('autoprefixer')] }
+            options: {
+              postcssOptions: { sourceMap: true, plugins: [require('autoprefixer')] }
+            }
           },
           {
             loader: 'sass-loader'
@@ -61,7 +63,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new WebpackAssetsManifest({ publicPath: true }),
+    new WebpackAssetsManifest({ publicPath: true, output: 'manifest.json' }),
     new MiniCssExtractPlugin({
       filename: isProd ? "[name]-[hash].css" : "[name].css"
     })]

@@ -5,12 +5,17 @@
   "repository": "git@github.com:kkismd/praisedb.git",
   "author": "SHIMADA Keiki <shimada.cake@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "build": "node_modules/.bin/webpack"
+  },
   "dependencies": {
+    "@popperjs/core": "^2.9.3",
     "autoprefixer": "^10.3.1",
-    "bootstrap": "^5.1.0",
+    "bootstrap": "^5.0.0-beta3",
     "bootswatch": "^5.1.0",
     "cofeescript": "^0.0.1-security",
     "coffee-loader": "^3.0.0",
+    "coffeescript": "^2.5.1",
     "css-loader": "^6.2.0",
     "file-loader": "^6.2.0",
     "jquery": "^3.6.0",
@@ -18,7 +23,7 @@
     "jquery-ui-themes": "^1.12.0",
     "mini-css-extract-plugin": "^2.2.0",
     "node-sass": "^6.0.1",
-    "popper.js": "^1.16.1",
+    "postcss": "^8.3.6",
     "postcss-loader": "^6.1.1",
     "postcss-preset-env": "^6.7.0",
     "rails-ujs": "^5.2.6",
