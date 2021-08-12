@@ -1,31 +1,33 @@
 {
-  "private": true,
-  "devDependencies": {
-    "webpack": "^4.41.2",
-    "webpack-assets-manifest": "^3.1.1",
-    "webpack-cli": "^3.3.10"
-  },
+  "name": "praisedb",
+  "version": "1.0.0",
+  "main": "app/javascript/application.js",
+  "repository": "git@github.com:kkismd/praisedb.git",
+  "author": "SHIMADA Keiki <shimada.cake@gmail.com>",
+  "license": "MIT",
   "dependencies": {
-    "autoprefixer": "^9.7.1",
-    "bootstrap": "^4.3.1",
-    "bootswatch": "^4.3.1",
-    "coffee-loader": "^0.9.0",
-    "coffeescript": "^2.4.1",
-    "css-loader": "^3.2.0",
-    "file-loader": "^4.2.0",
-    "jquery": "^3.4.1",
+    "autoprefixer": "^10.3.1",
+    "bootstrap": "^5.1.0",
+    "bootswatch": "^5.1.0",
+    "cofeescript": "^0.0.1-security",
+    "coffee-loader": "^3.0.0",
+    "css-loader": "^6.2.0",
+    "file-loader": "^6.2.0",
+    "jquery": "^3.6.0",
     "jquery-ui": "^1.12.1",
     "jquery-ui-themes": "^1.12.0",
-    "mini-css-extract-plugin": "^0.8.0",
-    "node-sass": "^4.13.0",
-    "popper.js": "^1.16.0",
-    "postcss-loader": "^3.0.0",
+    "mini-css-extract-plugin": "^2.2.0",
+    "node-sass": "^6.0.1",
+    "popper.js": "^1.16.1",
+    "postcss-loader": "^6.1.1",
     "postcss-preset-env": "^6.7.0",
-    "rails-ujs": "^5.2.3",
-    "sass-loader": "^8.0.0",
-    "style-loader": "^1.0.0"
+    "rails-ujs": "^5.2.6",
+    "sass-loader": "^12.1.0",
+    "style-loader": "^3.2.1"
   },
-  "comment": {
-    "bootswatch": "^4.3.1"
+  "devDependencies": {
+    "webpack": "^5.50.0",
+    "webpack-assets-manifest": "^5.0.6",
+    "webpack-cli": "^4.7.2"
   }
 }
