@@ -6,8 +6,9 @@
   "author": "SHIMADA Keiki <shimada.cake@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "webpack": "node_modules/.bin/webpack"
+    "postinstall": "yarn run webpack --config ./webpack.config.js --mode production"
   },
+  "engines": { "yarn": "1.22.11" },
   "dependencies": {
     "@popperjs/core": "^2.9.3",
     "autoprefixer": "^10.3.1",
