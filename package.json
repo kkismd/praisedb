@@ -6,7 +6,7 @@
   "author": "SHIMADA Keiki <shimada.cake@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "node_modules/.bin/webpack"
+    "webpack": "node_modules/.bin/webpack"
   },
   "dependencies": {
     "@popperjs/core": "^2.9.3",
