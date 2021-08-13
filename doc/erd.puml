@@ -2,42 +2,80 @@
 !include skinparam.puml
 hide circle
 
+title "PraiseDB entity relationship"
+
 entity homes {
-    ホームテーブル
+    所属
     --
     + id INTEGER [PK]
-    ~ name VARCHAR(255) [unique]
-    status INTEGER
 }
 
 entity users {
-    ユーザーテーブル
+    ユーザー
     --
     + id INTEGER [PK]
     * home_id INTEGER [FK]
-    ~ name VARCHAR(255) [unique]
-    password_digest VARCHAR(255)
-    status INTEGER
-    created_at TIMESTAMP
-    updated_at TIMESTAMP
 }
 
-entity messages {
-    メッセージレジュメテーブル
+entity slides {
+    説教
     --
     + id INTEGER [PK]
     * home_id INTEGER [FK]
 }
 
 entity songs {
-    歌詞テーブル
+    歌詞
     --
     + id INTEGER [PK]
     * home_id INTEGER [FK]
 }
+entity song_edits {
+    歌詞編集履歴
+    --
+    + id INTEGER [PK]
+    * song_id INTEGER [FK]
+}
 
-homes -{ users
-homes -d-{ messages
-homes -d-{ songs
+entity books {
+    聖句
+    --
+    + id INTEGER [PK]
+    * book_name_id INTEGER [FK]
+}
+
+entity book_names { 
+    書名
+    --
+    + id INTEGER [PK]
+}
+
+entity folders {
+    フォルダ
+    --
+    + id INTEGER [PK]
+    * home_id INTEGER [FK]
+}
+entity booknamrks {
+    ブックマーク
+    --
+    + id INTEGER [PK]
+    * folder_id INTEGER [FK]
+    action_name VARCHAR(255)
+    controller_name VARCHAR(255)
+}
+
+homes -* users
+homes -d-* slides
+homes -d-* songs
+
+book_names  --* books
+folders  --* booknamrks
+
+slides  --* booknamrks : Ref \nby name
+songs --* booknamrks : Ref \nby name
+books --* booknamrks : Ref \nby name
+homes --* folders
+songs --* song_edits
 
 @enduml

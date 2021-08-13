@@ -2,5 +2,15 @@ skinparam shadowing false
 skinparam BorderColor steelblue
 skinparam ClassBorderColor steelblue
 skinparam StateBorderColor steelblue
-skinparam StateBackgroundColor #white
-skinparam ClassBackgroundColor #white
+skinparam ActorBorderColor steelblue
+skinparam UsecaseBorderColor steelblue
+skinparam UsecaseBorderColor steelblue
+skinparam EntityBorderColor steelblue
+skinparam BoundaryBorderColor steelblue
+
+skinparam StateBackgroundColor white
+skinparam ClassBackgroundColor white
+skinparam ActorBackgroundColor white
+skinparam UsecaseBackgroundColor white
+skinparam EntityBackgroundColor white
+skinparam BoundaryBackgroundColor white

@@ -1,0 +1,28 @@
+@startuml usecase editors
+!include skinparam.puml
+left to right direction
+
+actor "説教の\n登録担当" as slide_user
+actor "歌詞の\n管理担当" as song_user
+
+package "PraseDB" {
+    entity slides
+    usecase "説教を\n登録する" as new 
+    usecase "説教を\n編集する" as edit
+
+    entity songs
+    usecase "歌詞を\n新規登録する" as register
+    usecase "歌詞を\n修正する" as revise
+}
+
+song_user -- register
+register -- songs
+song_user -- revise
+revise -- songs
+
+slide_user -- new
+slide_user -- edit
+new -- slides
+edit -- slides
+
+@enduml

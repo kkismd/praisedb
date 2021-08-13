@@ -1,0 +1,31 @@
+@startuml usecase program
+!include skinparam.puml
+left to right direction
+
+actor user as "プロジェクター\n表示担当"
+package "Praise DB" {
+    entity songs
+    entity slides
+    entity words
+    entity folders
+    entity bookmarks
+    usecase "フォルダを\n作成する" as uc_folders
+    usecase "歌詞を\n検索する" as uc_songs 
+    usecase "説教を\n検索する" as uc_slides
+    usecase "聖句を\n検索する" as uc_words
+    usecase "ブックマーク\nを追加する" as uc_bookmarks
+}
+
+user -- uc_folders
+user -- uc_songs
+user -- uc_slides
+user -- uc_words
+user -- uc_bookmarks
+
+uc_folders -- folders
+uc_bookmarks -- bookmarks
+uc_songs -- songs
+uc_slides -- slides
+uc_words -- words
+
+@enduml
