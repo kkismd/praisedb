@@ -1,8 +1,12 @@
 <h1>Top#index</h1>
-<p>Find me in app/views/top/index.html.erb</p>
 
 <% if current_user %>
-<%= link_to "Log out", logout_path, method: "delete" %>
+<ul>
+<li><%= link_to 'さんび', songs_path %>
+<li><%= link_to 'みことば', books_path %>
+<li><%= link_to 'メッセージ', slides_path %>
+</ul>
+<p><%= link_to "Log out", logout_path, method: "delete" %></p>
 <% else %>
 <%= link_to "Log in", login_path %>
 <% end %>
