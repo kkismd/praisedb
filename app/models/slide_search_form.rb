@@ -2,17 +2,18 @@ class SlideSearchForm
   extend ActiveModel::Naming
   include ActiveModel::Conversion
 
-  attr_accessor :q
+  attr_accessor :q, :home_id
 
-  def initialize(params)
+  def initialize(params, home_id)
     if params && params.has_key?(:q)
       self.q = params[:q]
     end
+    self.home_id = home_id
   end
 
   def search
     slides = Slide.arel_table
-    Slide.where(slides[:body].matches("%#{q}%"))
+    Slide.where(slides[:body].matches("%#{q}%"), home_id: home_id)
   end
 
   private def persisted?

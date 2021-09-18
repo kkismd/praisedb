@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @bookmark.title %>
+</p>
+
+<p>
+  <b>Controller:</b>
+  <%= @bookmark.controller_name %>
+</p>
+
+<p>
+  <b>Actioni:</b>
+  <%= @bookmark.action_name %>
+</p>
+
+<p>
+  <b>Params:</b>
+  <%= @bookmark.params_value %>
+</p>
+
+<p>
+  <b>Folder_id:</b>
+  <%= @bookmark.folder_id %>
+</p>
+<p>
+  <b>Position:</b>
+  <%= @bookmark.position %>
+</p>
+
+
+<%= link_to 'Edit', edit_bookmark_path(@bookmark) %> |
+<%= link_to 'Back', bookmarks_path %>

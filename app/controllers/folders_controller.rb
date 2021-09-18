@@ -8,14 +8,17 @@ class FoldersController < ApplicationController
 
   # GET /folders/1/content
   def content
-    @folder = Folder.find(params[:id])
+    @folder = find_folder(params[:id])
     render partial: 'content_bookmarks'
   end
 
   # GET /folders
   # GET /folders.json
   def index
-    @folders = Folder.all
+    @folders = Folder
+               .where(home_id: current_user.home_id)
+               .order('id')
+               .page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -26,7 +29,7 @@ class FoldersController < ApplicationController
   # GET /folders/1
   # GET /folders/1.json
   def show
-    @folder = Folder.find(params[:id])
+    @folder = find_folder(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -47,7 +50,7 @@ class FoldersController < ApplicationController
 
   # GET /folders/1/edit
   def edit
-    @folder = Folder.find(params[:id])
+    @folder = find_folder(params[:id])
   end
 
   # POST /folders
@@ -82,7 +85,7 @@ class FoldersController < ApplicationController
   # PUT /folders/1
   # PUT /folders/1.json
   def update
-    @folder = Folder.find(params[:id])
+    @folder = find_folder(params[:id])
     if params[:folder_content_bookmarks].present?
       bms = params[:folder_content_bookmarks].split(/,/).map do |str|
         str.gsub(/bm_/, '').to_i
@@ -90,7 +93,7 @@ class FoldersController < ApplicationController
       @folder.reorder(bms)
     end
 
-    attr = params[:folder].dup
+    attr = folder_params.dup
     if attr[:title_date].present?
       attr[:title] = attr[:title_date] + ' ' + attr[:title]
     end
@@ -110,12 +113,20 @@ class FoldersController < ApplicationController
   # DELETE /folders/1
   # DELETE /folders/1.json
   def destroy
-    @folder = Folder.find(params[:id])
+    @folder = find_folder(params[:id])
     @folder.destroy
 
     respond_to do |format|
       format.html { redirect_to folders_url }
       format.json { head :no_content }
     end
+  end
+
+  private def folder_params
+    params.require(:folder).permit(:home_id, :title, :title_date, :sticky)
+  end
+
+  private def find_folder(folder_id)
+    find_model(Folder, folder_id)
   end
 end

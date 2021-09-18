@@ -2,7 +2,7 @@ class SlidesController < ApplicationController
   # GET /slides
   # GET /slides.json
   def index
-    @slide_search_form = SlideSearchForm.new(params[:slide_search_form])
+    @slide_search_form = SlideSearchForm.new(params[:slide_search_form], current_user.home_id)
     @recents = Slide.recents
 
     respond_to do |format|
@@ -12,7 +12,10 @@ class SlidesController < ApplicationController
   end
 
   def list
-    @slides = Slide.order('id').page(params[:page])
+    @slides = Slide
+              .where(home_id: current_user.home_id)
+              .order('id')
+              .page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -23,8 +26,11 @@ class SlidesController < ApplicationController
   # GET /slides/1
   # GET /slides/1.json
   def show
-    @slide = Slide.find(params[:id])
+    @slide = find_slide(params[:id])
 
+    if @slide.blank?
+      raise ActiveRecord::RecordNotFound.new("Couldn't find Slide with 'id'=#{params[:id]}")
+    end
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @slide }
@@ -33,7 +39,7 @@ class SlidesController < ApplicationController
 
   # GET /slides/1/detail
   def detail
-    @slide = Slide.find(params[:id])
+    @slide = find_slide(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -59,13 +65,14 @@ class SlidesController < ApplicationController
 
   # GET /slides/1/edit
   def edit
-    @slide = Slide.find(params[:id])
+    @slide = find_slide(params[:id])
   end
 
   # POST /slides
   # POST /slides.json
   def create
-    @slide = Slide.new(params[:slide])
+    @slide = Slide.new(slide_params)
+    @slide.home_id = current_user.home_id
 
     respond_to do |format|
       if @slide.save
@@ -81,10 +88,10 @@ class SlidesController < ApplicationController
   # PUT /slides/1
   # PUT /slides/1.json
   def update
-    @slide = Slide.find(params[:id])
+    @slide = find_slide(params[:id])
 
     respond_to do |format|
-      if @slide.update_attributes(params[:slide])
+      if @slide.update_attributes(slide_params)
         format.html { redirect_to @slide, notice: 'Slide was successfully updated.' }
         format.json { head :no_content }
       else
@@ -97,7 +104,7 @@ class SlidesController < ApplicationController
   # DELETE /slides/1
   # DELETE /slides/1.json
   def destroy
-    @slide = Slide.find(params[:id])
+    @slide = find_slide(params[:id])
     @slide.destroy
 
     respond_to do |format|
@@ -109,5 +116,15 @@ class SlidesController < ApplicationController
   def search
     @slide_search_form = SlideSearchForm.new(params[:slide_search_form])
     @slides = @slide_search_form.search.page(params[:page])
+  end
+
+  private def slide_params
+    params.require(:slide).permit(
+      :home_id, :title, :body, :author
+    )
+  end
+
+  private def find_slide(slide_id)
+    find_model(Slide, slide_id)
   end
 end

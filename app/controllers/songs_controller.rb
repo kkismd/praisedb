@@ -3,8 +3,8 @@ class SongsController < ApplicationController
   # GET /songs
   # GET /songs.json
   def index
-    @song_search_form = SongSearchForm.new(params[:song_search_form])
-    @recents = Song.recents
+    @song_search_form = SongSearchForm.new(params[:song_search_form], current_user.home_id)
+    @recents = Song.recents(current_user.home_id)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +13,10 @@ class SongsController < ApplicationController
   end
 
   def list
-    @songs = Song.order('id').page(params[:page])
+    @songs = Song
+             .where(home_id: current_user.home_id)
+             .order('id')
+             .page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -22,13 +25,13 @@ class SongsController < ApplicationController
   end
 
   def list_all
-    @songs = Song.order('id')
+    @songs = Song.where(home_id: current_user.home_id).order('id')
   end
 
   # GET /songs/1
   # GET /songs/1.json
   def show
-    @song = Song.find(params[:id])
+    @song = find_song(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -38,7 +41,7 @@ class SongsController < ApplicationController
 
   # GET /songs/1/detail
   def detail
-    @song = Song.find(params[:id])
+    @song = find_song(params[:id])
 
     respond_to do |format|
       format.html # detail.html.erb
@@ -63,14 +66,16 @@ class SongsController < ApplicationController
 
   # GET /songs/1/edit
   def edit
-    @song = Song.find(params[:id])
+    @song = find_song(params[:id])
   end
 
   # POST /songs
   # POST /songs.json
   def create
-    @song = Song.new(params[:song])
+    @song = Song.new(song_params)
+    @song.home_id = current_user.home_id
     @song.romanize!
+    @song.update_words_for_search!
 
     respond_to do |format|
       if @song.save
@@ -86,10 +91,10 @@ class SongsController < ApplicationController
   # PUT /songs/1
   # PUT /songs/1.json
   def update
-    @song = Song.find(params[:id])
-    song_attributes = params[:song]
+    @song = find_song(params[:id])
+
     is_roman_button = (params[:button] == 'roman')
-    is_saved = @song.update_with(is_roman_button, song_attributes)
+    is_saved = @song.update_with(is_roman_button, song_params)
 
     respond_to do |format|
       if is_saved
@@ -105,7 +110,7 @@ class SongsController < ApplicationController
   # DELETE /songs/1
   # DELETE /songs/1.json
   def destroy
-    @song = Song.find(params[:id])
+    @song = find_song(params[:id])
     @song.destroy
 
     respond_to do |format|
@@ -115,7 +120,20 @@ class SongsController < ApplicationController
   end
 
   def search
-    @song_search_form = SongSearchForm.new(params[:song_search_form])
+    @song_search_form = SongSearchForm.new(
+      params[:song_search_form],
+      current_user.home_id
+    )
     @songs = @song_search_form.search.page(params[:page])
+  end
+
+  private def song_params
+    params.require(:song).permit(
+      :code, :title, :words, :cright
+    )
+  end
+
+  private def find_song(song_id)
+    find_model(Song, song_id)
   end
 end

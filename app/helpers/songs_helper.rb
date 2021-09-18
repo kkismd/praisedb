@@ -18,12 +18,14 @@ module SongsHelper
   end
 
   def link_to_pdf(id)
-    pdf_file_path = Pathname(Settings.pdf_directory_path) + "#{id}.pdf"
-    if pdf_file_path.exist?
-      link_to("PDF", "/pdf/#{id}.pdf")
-    else
-      ""
-    end
+    return ''
+
+    # pdf_file_path = Pathname(Settings.pdf_directory_path) + "#{id}.pdf"
+    # if pdf_file_path.exist?
+    #   link_to("PDF", "/pdf/#{id}.pdf")
+    # else
+    #   ""
+    # end
   end
 
   def title(page_title = "PRAISE DATABASE")

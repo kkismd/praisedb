@@ -14,8 +14,8 @@ class Song < ActiveRecord::Base
     %w(A Ab Bb C Cm D E  Eb Em F  F#m Fm G)
   end
 
-  def self.recents
-    self.order('updated_at DESC').limit(10)
+  def self.recents(home_id)
+    where(home_id: home_id).order('updated_at DESC').limit(10)
   end
 
   # 空行で区切られたテキストをグループとする

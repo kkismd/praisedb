@@ -54,7 +54,7 @@ class BookmarksController < ApplicationController
   end
 
   def create_remote
-    bookmark = Bookmark.new(create_params)
+    bookmark = Bookmark.new(bookmark_params)
     session[:current_folder].present? && folder = Folder.where(id: session[:current_folder].to_i).first
     if folder
       folder.add(bookmark)
@@ -71,7 +71,7 @@ class BookmarksController < ApplicationController
     @bookmark = Bookmark.find(params[:id])
 
     respond_to do |format|
-      if @bookmark.update_attributes(params[:bookmark])
+      if @bookmark.update_attributes(bookmark_params)
         format.html { redirect_to @bookmark, notice: 'Bookmark was successfully updated.' }
         format.json { head :no_content }
       else
@@ -93,7 +93,7 @@ class BookmarksController < ApplicationController
     end
   end
 
-  private def create_params
+  private def bookmark_params
     params.require(:bookmark).permit(:title, :controller_name, :action_name, :params_value, :commit)
   end
 end
