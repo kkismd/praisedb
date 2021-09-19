@@ -26,11 +26,3 @@ ready(function () {
         }
     });
 });
-
-
-/** ここから下はサンプル */
-import { hello } from "./greeter";
-console.log(hello("Rails"));
-
-import { foo } from './hello';
-foo();

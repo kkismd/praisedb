@@ -73,7 +73,6 @@ class SongsController < ApplicationController
   # POST /songs.json
   def create
     @song = Song.new(song_params)
-    @song.home_id = current_user.home_id
     @song.romanize!
     @song.update_words_for_search!
 
@@ -128,9 +127,11 @@ class SongsController < ApplicationController
   end
 
   private def song_params
-    params.require(:song).permit(
+    hash = params.require(:song).permit(
       :code, :title, :words, :cright
     )
+    hash[:home_id] = current_user.home_id
+    hash
   end
 
   private def find_song(song_id)

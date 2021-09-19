@@ -1,17 +1,26 @@
-<%- active_folder_index = active_folder_id = 0 -%>
+<%-
+  if session[:current_folder].present?
+    active_folder_id = session[:current_folder].to_i
+    active_folder_index = nil
+  else
+    active_folder_id = nil
+    active_folder_index = 0
+  end
+%>
 <div id="bookmark">
-  <%- Folder.recents.each_with_index do |folder, idx| -%>
+  <%- Folder.recents(current_user.home_id).includes(:bookmarks).each_with_index do |folder, idx| -%>
       <%-
-          if folder.id == session[:current_folder].to_i
-            active_folder_index = idx
-            active_folder_id = folder.id
-          end
+        if active_folder_id.present? && folder.id == active_folder_id
+          active_folder_index = idx
+        elsif active_folder_index.present? && idx == active_folder_index
+          active_folder_id = folder.id
+        end
       -%>
       <div class="bmfolder" data-folder-id="<%= folder.id %>"><%= folder.title %></div>
       <div>
         <ul class="bmlist">
           <%- folder.bookmarks.each do |bookmark| -%>
-              <li id="bm-<%= bookmark.id %>"><span class="ui-icon ui-icon-document"></span><%= link_to_bookmark(bookmark) %></li>
+            <li id="bm-<%= bookmark.id %>"><span class="ui-icon ui-icon-document"></span><%= link_to_bookmark(bookmark) %></li>
           <%- end -%>
         </ul>
       </div>

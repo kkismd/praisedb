@@ -56,7 +56,8 @@ class FoldersController < ApplicationController
   # POST /folders
   # POST /folders.json
   def create
-    @folder = Folder.make(params[:folder])
+    @folder = Folder.make(folder_params)
+    @folder.home_id = current_user.home_id
 
     respond_to do |format|
       if @folder.save
@@ -70,7 +71,8 @@ class FoldersController < ApplicationController
   end
 
   def create_remote
-    @folder = Folder.make(params[:folder])
+    @folder = Folder.make(folder_params)
+    @folder.home_id = current_user.home_id
     @folder.save
     render :partial => 'shared/bookmark'
   end

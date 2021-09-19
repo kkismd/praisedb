@@ -72,7 +72,6 @@ class SlidesController < ApplicationController
   # POST /slides.json
   def create
     @slide = Slide.new(slide_params)
-    @slide.home_id = current_user.home_id
 
     respond_to do |format|
       if @slide.save
@@ -114,14 +113,16 @@ class SlidesController < ApplicationController
   end
 
   def search
-    @slide_search_form = SlideSearchForm.new(params[:slide_search_form])
+    @slide_search_form = SlideSearchForm.new(params[:slide_search_form], current_user.home_id)
     @slides = @slide_search_form.search.page(params[:page])
   end
 
   private def slide_params
-    params.require(:slide).permit(
+    hash = params.require(:slide).permit(
       :home_id, :title, :body, :author
     )
+    hash[:home_id] = current_user.home_id
+    hash
   end
 
   private def find_slide(slide_id)

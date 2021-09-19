@@ -40,7 +40,7 @@ class BookmarksController < ApplicationController
   # POST /bookmarks
   # POST /bookmarks.json
   def create
-    @bookmark = Bookmark.new(params[:bookmark])
+    @bookmark = Bookmark.new(bookmark_params)
 
     respond_to do |format|
       if @bookmark.save
@@ -94,6 +94,8 @@ class BookmarksController < ApplicationController
   end
 
   private def bookmark_params
-    params.require(:bookmark).permit(:title, :controller_name, :action_name, :params_value, :commit)
+    params
+      .require(:bookmark)
+      .permit(:title, :controller_name, :action_name, :params_value, :commit)
   end
 end

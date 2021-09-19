@@ -10,8 +10,10 @@ class Folder < ActiveRecord::Base
     new(title: title)
   end
 
-  def self.recents
-    self.order('sticky DESC, updated_at DESC').limit(FOLDER_SHOW_COUNT)
+  def self.recents(home_id)
+    where(home_id: home_id)
+      .order('sticky DESC, updated_at DESC')
+      .limit(FOLDER_SHOW_COUNT)
   end
 
   def reorder(bookmark_ids)
