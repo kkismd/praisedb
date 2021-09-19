@@ -1,11 +1,6 @@
-<h1>Top#index</h1>
-
 <% if current_user %>
-<ul>
-<li><%= link_to 'さんび', songs_path %>
-<li><%= link_to 'みことば', books_path %>
-<li><%= link_to 'メッセージ', slides_path %>
-</ul>
+<h1>Praise DATABASE</h1>
+<%= render :partial => 'shared/menu' %>
 <p><%= link_to "Log out", logout_path, method: "delete" %></p>
 <% else %>
 <%= link_to "Log in", login_path %>

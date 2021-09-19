@@ -25,10 +25,4 @@
 <%- end -%>
 </ul>
 
-<h2>menu</h2>
-<ul>
-  <li><%= link_to '新しいスライドの追加 - Add new Slides', new_slide_path %></li>
-  <li><%= link_to '賛美歌詞表示 - Praise songs', songs_path %></li>
-  <li><%= link_to '聖句検索 - Bible words', books_path %></li>
-</ul>
-</div>
+<%= render :partial => 'shared/menu' %>

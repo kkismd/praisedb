@@ -52,10 +52,10 @@
           next_remote(url);
           return false;
       } else if (key >= KEYBOARD_1 && key < KEYBOARD_1 + size) {
-          songs_change_remote(key - KEYBOARD_1, url);
+          change_remote(key - KEYBOARD_1, url);
           return false;
       } else if (key >= KEYPAD_1 && key < KEYPAD_1 + size) {
-          songs_change_remote(key - KEYPAD_1, url);
+          change_remote(key - KEYPAD_1, url);
           return false;
       } else if (key == KEYBOARD_0 || key == KEYPAD_0) {
           wipe_remote();
@@ -66,7 +66,7 @@
     $('.change-button').click(function (event) {
       const idx = $(event.currentTarget).data('idx');
       const url = $(event.currentTarget).data('url');
-      songs_change_remote(idx, url);
+      change_remote(idx, url);
     });
   })
 </script>

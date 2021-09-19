@@ -15,7 +15,6 @@ window.books_resize = ->
     font_size = parseInt($container.css('font-size'))
     new_font_size = font_size * 0.95
     $container.css('font-size', new_font_size + 'px')
-    console.log('new_font_size: ', new_font_size)
 
 current = 0
 w = -> $('#wd-' + current)

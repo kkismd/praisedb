@@ -30,7 +30,7 @@ get_target_window = ->
 current = 0
 
 # 子ウィンドウの歌詞を切り替える
-window.songs_change_remote = (idx, url) ->
+window.change_remote = (idx, url) ->
   detail_window = get_target_window()
 
   # 指定のURLにいなければ移動
@@ -39,21 +39,8 @@ window.songs_change_remote = (idx, url) ->
 
   # 表示切り替えを指示
   setTimeout(->
-    detail_window.songs_change(idx)
-    current = idx
-  ,100)
-
-# 子ウィンドウの歌詞を切り替える
-window.slides_change_remote = (idx, url) ->
-  detail_window = get_target_window()
-
-  # 指定のURLにいなければ移動
-  if url isnt detail_window.location.href
-    detail_window.location = url
-
-  # 表示切り替えを指示
-  setTimeout(->
-    detail_window.slides_change(idx)
+    detail_window.songs_change && detail_window.songs_change(idx)
+    detail_window.slides_change && detail_window.slides_change(idx)
     current = idx
   ,100)
 

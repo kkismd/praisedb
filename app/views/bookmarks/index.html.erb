@@ -1,7 +1,7 @@
 <%- title -%>
 <h1>Listing bookmarks</h1>
 
-<table>
+<table class="table">
   <tr>
     <th>Name</th>
     <th>folder_id</th>
@@ -22,14 +22,10 @@
   </tr>
 <% end %>
 </table>
+<%= paginate @bookmarks %>
 
-<br />
+<p>
+<%= link_to '新しいブックマーク - New Bookmark', new_bookmark_path %>
+</p>
 
-<%= link_to 'New Bookmark', new_bookmark_path %>
-
-<h2>menu</h2>
-<ul>
-  <li><%= link_to '賛美歌詞表示 - Praise songs', songs_path %></li>
-  <li><%= link_to 'メッセージスライド - Message summaries', slides_path %></li>
-  <li><%= link_to '聖句検索 - Bible words', books_path %></li>
-</ul>
+<%= render :partial => 'shared/menu' %>
