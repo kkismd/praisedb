@@ -25,6 +25,7 @@
         </ul>
       </div>
   <%- end -%>
+  <%- active_folder_index.blank? && active_folder_index = 0 -%>
 </div>
 
 <p>
@@ -65,7 +66,7 @@
         $('#folder_title_date').datepicker(options);
 
         $('#new_folder').on('ajax:success', function(date, res){
-            $('#bookmark_container').html(res);
+          window.location.reload();
         });
         
         $('#new_folder_button').click(function(event) {
