@@ -41,7 +41,7 @@ class Song < ActiveRecord::Base
   end
 
   def ruby_trim(str)
-    str.gsub(NOT_WORDS, '')
+    str.gsub(/\s+/, ' ').gsub(NOT_WORDS, '')
   end
 
   def romanize!
