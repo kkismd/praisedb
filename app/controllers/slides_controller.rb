@@ -48,7 +48,7 @@ class SlidesController < ApplicationController
   end
 
   def preview
-    @slide = Slide.new(body:params[:body])
+    @slide = Slide.new(slide_params)
     render layout: false
   end
 

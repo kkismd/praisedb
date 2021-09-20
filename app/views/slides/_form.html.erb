@@ -27,9 +27,6 @@
     <th></th>
     <td>
       <%= f.submit %>
-      <%= link_to 'preview', :preview_slides,
-                  remote: true, method: :post,
-                  id: 'preview-button', :'data-type' => :html %>
     </td>
   </tr>
 </table>
@@ -37,17 +34,22 @@
 
   </div>
 <% end %>
+<%= form_tag preview_slides_path, id: 'previewform', remote: true, method: :post do %>
+  <%= submit_tag 'preview' %>
+  <%= hidden_field :slide, :body, id: 'hiddenbody' %>
+  <input type="hidden" id="hoge">
+  <script type="text/javascript">
+    $('#previewform')
+      .on("ajax:before", function(){
+        $('#hiddenbody').val($('#slide_body').val());
+      })
+      .on('ajax:success', function(event){
+        const [doc, _status, _xhr] = event.detail
+        $('#preview').html(doc.body);
+        $('.preview-page').each(function(i,elm){
+          resize(elm);
+        })
+      });
+  </script>
+<% end %>
 <div id="preview"></div>
-
-<script type="text/javascript">
-    $('#preview-button')
-            .on("ajax:before", function(){
-                $(this).data('params', 'body=' + encodeURIComponent($('#slide_body').val()));
-            })
-            .on('ajax:success', function(data, res, xhr){
-                $('#preview').html(res);
-                $('.preview-page').each(function(i,elm){
-                    resize(elm);
-                })
-            });
-</script>
