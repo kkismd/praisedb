@@ -3,13 +3,13 @@ window.resize = (e) ->
   e.style.fontSize = '80px'
 
   # 領域のサイズとdivのサイズの割合を求める
-  widthGap = e.parentNode.clientWidth / e.scrollWidth
-  heightGap = e.parentNode.clientHeight / e.scrollHeight
+  widthGap = e.clientWidth / e.scrollWidth
+  heightGap = e.clientHeight / e.scrollHeight
   # 拡大率は縦横ではみ出しが大きい方に合わせる
   gapRatio = Math.min(widthGap, heightGap) * 0.95
   # サイズを変更する
   fontSize = e.style.fontSize
-  newFontSize = parseInt(parseInt(fontSize) * gapRatio)
+  newFontSize = Math.floor(parseInt(fontSize) * gapRatio)
   e.style.fontSize = newFontSize + 'px'
 
 window.centering = (element) ->
