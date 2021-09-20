@@ -50,7 +50,7 @@ class SongsController < ApplicationController
   end
 
   def preview
-    @song = Song.new(words:params[:words])
+    @song = Song.new(song_params)
   end
 
   # GET /songs/new
