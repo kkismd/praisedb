@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   end
 
   private def find_model(model_class, model_id)
-    object = model_class.find_by(id: model_id, home_id: current_user.home_id)
+    object = model_class.kept.find_by(id: model_id, home_id: current_user.home_id)
     if object.blank?
       raise ActiveRecord::RecordNotFound.new("Couldn't find #{model_class} with 'id'=#{model_id}")
     end

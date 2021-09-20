@@ -10,7 +10,7 @@ class Slide < ActiveRecord::Base
   end
 
   def self.recents
-    self.order('updated_at DESC').limit(10)
+    kept.order('updated_at DESC').limit(9)
   end
 
   def normalize_eol(str)

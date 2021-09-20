@@ -10,6 +10,11 @@ class Folder < ActiveRecord::Base
     new(title: title)
   end
 
+  # このモデルは論理削除しないのでダミーメソッドを定義する
+  def self.kept
+    all
+  end
+
   def self.recents(home_id)
     where(home_id: home_id)
       .order('sticky DESC, updated_at DESC')

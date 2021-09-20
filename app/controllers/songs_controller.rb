@@ -14,6 +14,7 @@ class SongsController < ApplicationController
 
   def list
     @songs = Song
+             .kept
              .where(home_id: current_user.home_id)
              .order('id')
              .page(params[:page])
@@ -25,7 +26,7 @@ class SongsController < ApplicationController
   end
 
   def list_all
-    @songs = Song.where(home_id: current_user.home_id).order('id')
+    @songs = Song.kept.where(home_id: current_user.home_id).order('id')
   end
 
   # GET /songs/1
@@ -110,7 +111,7 @@ class SongsController < ApplicationController
   # DELETE /songs/1.json
   def destroy
     @song = find_song(params[:id])
-    @song.destroy
+    @song.discard
 
     respond_to do |format|
       format.html { redirect_to songs_url }

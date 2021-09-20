@@ -13,6 +13,7 @@ class SlidesController < ApplicationController
 
   def list
     @slides = Slide
+              .kept
               .where(home_id: current_user.home_id)
               .order('id')
               .page(params[:page])
@@ -104,7 +105,7 @@ class SlidesController < ApplicationController
   # DELETE /slides/1.json
   def destroy
     @slide = find_slide(params[:id])
-    @slide.destroy
+    @slide.discard
 
     respond_to do |format|
       format.html { redirect_to slides_url }

@@ -8,14 +8,14 @@ class Song < ActiveRecord::Base
   KANJI_KANA = /([一-龠々]+)\(([ぁ-ん]+)\)/ # 漢字 ⇒ ひらがな
   ENG_KANA = /([a-zA-Z']+)\(([ァ-ヶー]+)\)/ # 英語 ⇒ カタカナ
   KANA_HIRA = /([ァ-ヴー]+)\(([ぁ-んー]+)\)/ # カタカナ ⇒ ひらがな
-  NOT_WORDS = /[^a-zA-Z一-龠々ぁ-んァ-ヶ々ー]/ # 英字、漢字、ひらがな、カタカナ 以外の文字
+  NOT_WORDS = /[^a-zA-Z一-龠々ぁ-んァ-ヶ々ー ]/ # 英字、漢字、ひらがな、カタカナ 半角空白 以外の文字
 
   def self.code_options
     %w(A Ab Bb C Cm D E  Eb Em F  F#m Fm G)
   end
 
   def self.recents(home_id)
-    where(home_id: home_id).order('updated_at DESC').limit(10)
+    kept.where(home_id: home_id).order('updated_at DESC').limit(10)
   end
 
   # 空行で区切られたテキストをグループとする
