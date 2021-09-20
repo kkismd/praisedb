@@ -1,7 +1,21 @@
-@import "~bootswatch/dist/darkly/variables";
+@import "~bootswatch/dist/cyborg/variables";
 @import "~bootstrap/scss/bootstrap.scss";
-@import "~bootswatch/dist/darkly/bootswatch";
+@import "~bootswatch/dist/cyborg/bootswatch";
 
 .btn {
     color: #333;
+}
+pre {
+    color: white;
+    font-family: Helvetica, Arial, sans-serif;
+}
+pre span.roman {
+    font-family: "Arial Narrow", sans-serif;
+}
+.shadow {
+    text-shadow:
+        -1px -1px #00f,
+        1px -1px #00f,
+        -1px 1px #00f,
+        1px 1px #00f;
 }
