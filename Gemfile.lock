@@ -261,6 +261,7 @@ DEPENDENCIES
   mysql2 (>= 0.4.4)
   puma (~> 4.3)
   rails (~> 6.0.4.1)
+  rubyzip
   sass-rails (>= 6)
   selenium-webdriver
   simpacker

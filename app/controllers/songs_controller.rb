@@ -1,4 +1,5 @@
 # encode: utf-8
+require 'zip'
 class SongsController < ApplicationController
   # GET /songs
   # GET /songs.json
@@ -125,6 +126,23 @@ class SongsController < ApplicationController
       current_user.home_id
     )
     @songs = @song_search_form.search.page(params[:page])
+  end
+
+  def backup
+    folder = Song.backup
+    base_dir = Rails.root.join('tmp')
+    today = Time.zone.today.to_s
+    zipfile_path = Rails.root.join('tmp', "songs-#{today}.zip")
+    zipfile_path.unlink if zipfile_path.exist?
+    Zip.unicode_names = true
+    # @type [Zip::File] zipfile
+    Zip::File.open(zipfile_path, Zip::File::CREATE) do |zipfile|
+      folder.children.each do |song_file|
+        zipfile_path = song_file.relative_path_from(base_dir)
+        zipfile.add(zipfile_path, song_file)
+      end
+    end
+    send_file(zipfile_path, filename: zipfile_path.basename.to_s)
   end
 
   private def song_params

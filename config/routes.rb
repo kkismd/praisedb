@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       get :list
       get :list_all
       post :preview
+      get :backup
     end
   end
 

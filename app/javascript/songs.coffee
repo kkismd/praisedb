@@ -17,12 +17,9 @@ transition = (callback) ->
   $('#container').show()
   p().animate({opacity:0}, 100, ->
     p().css({display:'none'})
-    preElement().style.position = "relative"
     callback()
     p().css({opacity:0, display:'block'})
     resize(e())
-    preElement().style.position = "absolute"
-    centering(e())
     p().animate({opacity:1}, 100)
   )
 

@@ -18,6 +18,27 @@ class Song < ActiveRecord::Base
     kept.where(home_id: home_id).order('updated_at DESC').limit(10)
   end
 
+  # バックアップファイルを作りそのフォルダーを返す
+  # @return [Pathname] バックアップを作成したフォルダ
+  def self.backup
+    archive_name = 'songs'
+    folder = Rails.root.join('tmp', archive_name)
+    folder.rmtree
+    folder.mkpath
+    kept.find_each do |song|
+      file_name = "#{song.id}_#{song.fs_safe_title}.txt"
+      path = Rails.root.join('tmp', archive_name, file_name)
+      path.open('w') do |f|
+        f.write(song.words)
+      end
+    end
+    folder
+  end
+
+  def fs_safe_title
+    title.gsub(NOT_WORDS, '').gsub(/ +/, '_')
+  end
+
   # 空行で区切られたテキストをグループとする
   def phrases
     normalize_eol(words.to_s).split(/\n{2,}/)
@@ -80,33 +101,32 @@ class Song < ActiveRecord::Base
     is_saved
   end
 
-  private
-  def furigana?(str)
+  private def furigana?(str)
     str =~ KANJI_KANA || str =~ ENG_KANA || str =~ KANA_HIRA
   end
 
-  def kanjinize(str)
+  private def kanjinize(str)
     str.
         gsub(KANJI_KANA){$1}.
         gsub(ENG_KANA){$1}.
         gsub(KANA_HIRA){$1}
   end
 
-  def kananize(str)
+  private def kananize(str)
     str.
         gsub(KANJI_KANA){$2}.
         gsub(ENG_KANA){$1}.
         gsub(KANA_HIRA){$1}
   end
 
-  def kananaize_with_space(str)
+  private def kananaize_with_space(str)
     str.
         gsub(KANJI_KANA){' ' + $2 + ' '}.
         gsub(ENG_KANA){' ' + $1 + ' '}.
         gsub(KANA_HIRA){' ' + $1 + ' '}
   end
 
-  def normalize_eol(str)
+  private def normalize_eol(str)
     str.gsub(/\r\n/,"\n").gsub(/\r/, "\n")
   end
 end
