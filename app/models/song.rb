@@ -30,6 +30,8 @@ class Song < ActiveRecord::Base
       path = Rails.root.join('tmp', archive_name, file_name)
       path.open('w') do |f|
         f.write(song.words)
+        f.sync
+        f.close
       end
     end
     folder
@@ -37,6 +39,21 @@ class Song < ActiveRecord::Base
 
   def fs_safe_title
     title.gsub(NOT_WORDS, '').gsub(/ +/, '_')
+  end
+
+  # テキストファイルにメタ情報を入れる場合に使うメソッド
+  def text_format
+    <<~END_OF_FORMAT
+    ----
+    id: #{id}
+    code: #{code}
+    title: "#{title}"
+    cright: "#{cright}"
+    last_update: #{updated_at.to_s(:db)}
+    ----
+
+    #{words}
+    END_OF_FORMAT
   end
 
   # 空行で区切られたテキストをグループとする

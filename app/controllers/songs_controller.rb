@@ -138,8 +138,8 @@ class SongsController < ApplicationController
     # @type [Zip::File] zipfile
     Zip::File.open(zipfile_path, Zip::File::CREATE) do |zipfile|
       folder.children.each do |song_file|
-        zipfile_path = song_file.relative_path_from(base_dir)
-        zipfile.add(zipfile_path, song_file)
+        song_zip_path = song_file.relative_path_from(base_dir)
+        zipfile.add(song_zip_path, song_file)
       end
     end
     send_file(zipfile_path, filename: zipfile_path.basename.to_s)
