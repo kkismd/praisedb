@@ -23,7 +23,7 @@ class Song < ActiveRecord::Base
   def self.backup
     archive_name = 'songs'
     folder = Rails.root.join('tmp', archive_name)
-    folder.rmtree
+    folder.rmtree if folder.exist?
     folder.mkpath
     kept.find_each do |song|
       file_name = "#{song.id}_#{song.fs_safe_title}.txt"
