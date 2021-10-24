@@ -10,9 +10,6 @@ e = ->
 p = ->
   $(e())
 
-preElement = ->
-  $('.song pre')[current]
-
 transition = (callback) ->
   $('#container').show()
   p().animate({opacity:0}, 100, ->

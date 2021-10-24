@@ -44,10 +44,10 @@
       var size = <%= @song.phrases.size %>;
       var key = event.keyCode;
 
-      if (key == ARROW_UP) {
+      if (key === ARROW_UP) {
           prev_remote(url);
           return false;
-      } else if (key == ARROW_DOWN) {
+      } else if (key === ARROW_DOWN) {
           next_remote(url);
           return false;
       } else if (key >= KEYBOARD_1 && key < KEYBOARD_1 + size) {
@@ -56,7 +56,7 @@
       } else if (key >= KEYPAD_1 && key < KEYPAD_1 + size) {
           change_remote(key - KEYPAD_1, url);
           return false;
-      } else if (key == KEYBOARD_0 || key == KEYPAD_0) {
+      } else if (key === KEYBOARD_0 || key === KEYPAD_0) {
           wipe_remote();
           return false;
       }

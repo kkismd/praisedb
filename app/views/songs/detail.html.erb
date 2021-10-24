@@ -8,7 +8,7 @@
 <%- end -%>
 <div id='container'>
 <%- @song.phrases.each_with_index do |phrase, idx| %>
-    <div id="<%= 'p' + idx.to_s %>" class="song shadow <%= idx > 0 ? 'hidden' : '' %>"><pre><%= rubify  phrase %></pre></div>
+    <pre id="<%= 'p' + idx.to_s %>" class="song shadow <%= idx > 0 ? 'hidden' : '' %>"><%= rubify  phrase %></pre>
 <%- end -%>
 
 <script type="text/javascript">
@@ -18,19 +18,14 @@
     });
 
     function init() {
-        var p0 = $('#p0');
-        var first_part = p0.get(0);
-        var pre_element = p0.find('pre').get(0);
-        pre_element.style.position = "relative";
-        resize(first_part);
-        pre_element.style.position = "absolute";
-        centering(first_part);
+        var p0 = $('#p0')[0];
+        resize(p0);
     }
     function keybind() {
         $(document).keydown(function(event) {
-            if (event.keyCode == 38) {
+            if (event.keyCode === 38) {
                 return songs_prev();
-            } else if (event.keyCode == 40) {
+            } else if (event.keyCode === 40) {
                 return songs_next();
             }
         });
