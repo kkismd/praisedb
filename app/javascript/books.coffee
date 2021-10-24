@@ -2,8 +2,10 @@ window.books_centering = ->
   $container = $('#words-container')
   $header = $('#book-name')
   $element = $('#wd-' + current)
-  topOffset = ($container.height() - $element.height()) / 2 - $header.height()
-  if topOffset > 0
+  areaHeight = $container.height() - $header.height()
+  areaOffset = areaHeight - $element.height()
+  if areaOffset > 0
+    topOffset = areaOffset / 2 + $header.height()
     $element.css('position', 'absolute')
     $element.css('top', topOffset)
 
