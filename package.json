@@ -6,7 +6,6 @@
   "author": "SHIMADA Keiki <shimada.cake@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "postinstall": "yarn run webpack --config ./webpack.config.js --mode production",
     "heroku-postbuild": "yarn run webpack --config ./webpack.config.js --mode production"
   },
   "engines": {

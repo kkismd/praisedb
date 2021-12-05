@@ -58,6 +58,12 @@ module.exports = {
       }
     ]
   },
+  devServer: {
+    contentBase: path.resolve(__dirname, "public"),
+    publicPath: "/packs/",
+    host: "0.0.0.0",
+    port: 8081,
+  },
   plugins: [
     new WebpackAssetsManifest({ publicPath: true, output: 'manifest.json' }),
     new MiniCssExtractPlugin({
