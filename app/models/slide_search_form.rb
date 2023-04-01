@@ -13,7 +13,7 @@ class SlideSearchForm
 
   def search
     slides = Slide.arel_table
-    Slide.where(slides[:body].matches("%#{q}%"), home_id: home_id)
+    Slide.kept.where(slides[:body].matches("%#{q}%")).where(home_id: home_id)
   end
 
   private def persisted?
