@@ -5,13 +5,16 @@
 .btn {
     color: #333;
 }
+
 pre {
     color: white;
     font-family: Helvetica, Arial, sans-serif;
 }
+
 pre span.roman {
     font-family: "Arial Narrow", sans-serif;
 }
+
 .shadow {
     text-shadow:
         -1px -1px #00f,
@@ -19,22 +22,31 @@ pre span.roman {
         -1px 1px #00f,
         1px 1px #00f;
 }
+
 .book-word {
     color: white;
 }
+
 a:link {
     color: white;
     text-decoration: none;
 }
+
 a:visited {
     color: white;
     text-decoration: none;
 }
+
 a:hover {
     background-color: red;
     text-decoration: underline;
 }
+
 a:active {
     color: red;
     text-decoration: none;
+}
+
+textarea {
+    resize: both;
 }
