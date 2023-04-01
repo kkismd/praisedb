@@ -16,10 +16,10 @@ class SongSearchForm
 
   def search
     # 数字のみの場合は id とみなす
-    return Song.where(id: q.to_i, home_id: home_id) if q =~ /^[1-9][0-9]*$/
+    return Song.kept.where(id: q.to_i, home_id: home_id) if q =~ /^[1-9][0-9]*$/
 
     songs = Song.arel_table
-    result = Song.where(songs[:words_for_search].matches("%#{q}%"), home_id: home_id)
+    result = Song.kept.where(songs[:words_for_search].matches("%#{q}%")).where(home_id: home_id)
     if code.present?
       result = result.where(songs[:code].eq(code))
     end
