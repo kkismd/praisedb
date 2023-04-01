@@ -1,6 +1,8 @@
 # encode: utf-8
 require 'zip'
 class SongsController < ApplicationController
+  before_action :logged_in_user, except: :list_all
+
   # GET /songs
   # GET /songs.json
   def index
@@ -27,7 +29,8 @@ class SongsController < ApplicationController
   end
 
   def list_all
-    @songs = Song.kept.where(home_id: current_user.home_id).order('id')
+    home_id = current_user&.home_id || params[:home_id]
+    @songs = Song.kept.where(home_id: home_id).order('id')
   end
 
   # GET /songs/1
