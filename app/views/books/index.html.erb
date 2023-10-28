@@ -25,7 +25,18 @@
           <%= f.text_field :vt, :size => 4 %>節(verse)<br />
           <%= f.radio_button :lang, BookSearchForm::LANG_BOTH %>日本語 &amp; English
           <%= f.radio_button :lang, BookSearchForm::LANG_JAPANESE %>日本語のみ
-          <%= f.radio_button :lang, BookSearchForm::LANG_ENGLISH %>English Only<br />
+          <%= f.radio_button :lang, BookSearchForm::LANG_ENGLISH %>English Only
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3" style="color:pink;font-size:110%">
+          <%= f.radio_button :lang, BookSearchForm::LANG_BOTH_2017 %>2017版 &amp; English
+          <%= f.radio_button :lang, BookSearchForm::LANG_JAPANESE_2017 %>2017版のみ
+        </td>
+      </tr>
+      </tr>
+      <tr>
+        <td colspan="3" style="">
           <%= f.submit 'Open', id: :open_button %>
           <input type="reset" value="Reset">
           <%= button_to_blank %>
