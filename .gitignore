@@ -27,3 +27,10 @@
 /public/packs
 /node_modules
 yarn-error.log
+
+/db/
+!/db/.keep
+!/db/schema.rb
+!/db/migrate/
+
+njb2017*

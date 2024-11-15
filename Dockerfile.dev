@@ -14,6 +14,7 @@ RUN apk add --no-cache alpine-sdk \
     build-base \
     bash \
     tzdata \
+    postgresql-dev postgresql \
     dpkg
 
 RUN gem install bundler
