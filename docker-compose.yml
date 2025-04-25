@@ -2,45 +2,30 @@ services:
   app: &app_base      # rails server用コンテナ
     build:            # Dockerfileを実行し、ビルドされる時のパス指定
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.podman
     volumes:          # マウントする設定ファイルのパス指定
       - .:/app
     ports:            # port番号（docker:host）
       - "3000:3000"
     depends_on:       # Service同士の依存関係
-      - db
+      - pg
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     environment:
       RAILS_ENV: development
-      DB_HOST: db
+      DB_HOST: pg
     tty: true         # railsのデバッグを使用するための設定
     stdin_open: true  # 同上
   webpack-dev-server:
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.podman
     command: yarn run webpack --watch
-    volumes:
-      - ./public/packs:/app/public/packs
-      - ./app/javascript:/app/app/javascript
+    volumes:          # マウントする設定ファイルのパス指定
+      - .:/app
     ports:
       - "8081:8081"
     depends_on:
-      - db
-  db:
-    image: mysql:8.0
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin --default-authentication-plugin=mysql_native_password
-    volumes:
-      - mysql:/var/lib/mysql
-      # - ./docker_mysql:/etc/mysql/conf.d
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: ginmaku
-      MYSQL_USER: docker
-      MYSQL_PASSWORD: docker
-      TZ: 'Asia/Tokyo'
-    ports:
-      - "4306:3306"
+      - pg
   pg:
     image: postgres:16
     volumes:
@@ -55,7 +40,5 @@ services:
       - "5432:5432"
 
 volumes:
-  mysql:
-    driver: local
   postgres:
     driver: local
