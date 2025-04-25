@@ -2,8 +2,8 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# This file is the source Rails uses to define your schema when running `rails
-# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
 # be faster and is potentially less error prone than running all of your
 # migrations from scratch. Old migrations may fail to apply correctly if those
 # migrations use external dependencies or application code.
@@ -12,13 +12,16 @@
 
 ActiveRecord::Schema.define(version: 2019_11_25_002606) do
 
-  create_table "book_names", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "book_names", force: :cascade do |t|
     t.integer "testament", null: false
     t.string "japanese", null: false
     t.string "english", null: false
   end
 
-  create_table "bookmarks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+  create_table "bookmarks", force: :cascade do |t|
     t.bigint "folder_id"
     t.integer "position", null: false
     t.string "title", null: false
@@ -30,7 +33,7 @@ ActiveRecord::Schema.define(version: 2019_11_25_002606) do
     t.index ["folder_id"], name: "index_bookmarks_on_folder_id"
   end
 
-  create_table "books", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+  create_table "books", force: :cascade do |t|
     t.integer "version", null: false
     t.bigint "book_name_id"
     t.integer "chapter", null: false
@@ -39,7 +42,7 @@ ActiveRecord::Schema.define(version: 2019_11_25_002606) do
     t.index ["book_name_id"], name: "index_books_on_book_name_id"
   end
 
-  create_table "folders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+  create_table "folders", force: :cascade do |t|
     t.bigint "home_id"
     t.string "title", null: false
     t.boolean "sticky", default: false, null: false
@@ -48,14 +51,14 @@ ActiveRecord::Schema.define(version: 2019_11_25_002606) do
     t.index ["home_id"], name: "index_folders_on_home_id"
   end
 
-  create_table "homes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+  create_table "homes", force: :cascade do |t|
     t.string "name", null: false
     t.integer "status", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "slides", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+  create_table "slides", force: :cascade do |t|
     t.bigint "home_id"
     t.string "title", null: false
     t.text "body", null: false
@@ -67,7 +70,7 @@ ActiveRecord::Schema.define(version: 2019_11_25_002606) do
     t.index ["home_id"], name: "index_slides_on_home_id"
   end
 
-  create_table "song_edits", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+  create_table "song_edits", force: :cascade do |t|
     t.bigint "song_id"
     t.text "words", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -75,21 +78,21 @@ ActiveRecord::Schema.define(version: 2019_11_25_002606) do
     t.index ["song_id"], name: "index_song_edits_on_song_id"
   end
 
-  create_table "songs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+  create_table "songs", force: :cascade do |t|
     t.bigint "home_id"
     t.string "code", null: false
     t.string "title", null: false
     t.text "words", null: false
     t.text "words_for_search", null: false
     t.string "cright", null: false
-    t.timestamp "discarded_at"
+    t.datetime "discarded_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["discarded_at"], name: "index_songs_on_discarded_at"
     t.index ["home_id"], name: "index_songs_on_home_id"
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.bigint "home_id"
     t.string "name"
     t.string "password_digest"
