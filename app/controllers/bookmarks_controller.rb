@@ -71,7 +71,7 @@ class BookmarksController < ApplicationController
     @bookmark = Bookmark.find(params[:id])
 
     respond_to do |format|
-      if @bookmark.update_attributes(bookmark_params)
+      if @bookmark.update(bookmark_params)
         format.html { redirect_to @bookmark, notice: 'Bookmark was successfully updated.' }
         format.json { head :no_content }
       else

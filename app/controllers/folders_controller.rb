@@ -102,7 +102,7 @@ class FoldersController < ApplicationController
     attr.delete(:title_date)
 
     respond_to do |format|
-      if @folder.update_attributes(attr)
+      if @folder.update(attr)
         format.html { redirect_to @folder, notice: 'Folder was successfully updated.' }
         format.json { head :no_content }
       else
