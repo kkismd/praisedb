@@ -91,7 +91,7 @@ class SlidesController < ApplicationController
     @slide = find_slide(params[:id])
 
     respond_to do |format|
-      if @slide.update_attributes(slide_params)
+      if @slide.update(slide_params)
         format.html { redirect_to @slide, notice: 'Slide was successfully updated.' }
         format.json { head :no_content }
       else
